@@ -96,6 +96,7 @@ func (s *Store) GetCandles(marketId string, interval uint64, fromTimestamp uint6
 						MarketId:         candle.MarketId,
 						Interval:         candle.Interval,
 						ClosingTimestamp: candle.ClosingTimestamp,
+						OpeningTimestamp: candle.OpeningTimestamp,
 						Open:             candle.Open,
 						Close:            candle.Close,
 						High:             candle.High,
