@@ -50,11 +50,6 @@
           with:
             name: candles_api_dist
             path: ./
-        - name: debug
-          run: |
-            ls -als ./
-            ls -als ./candles-api
-            ls -als ./dist
         - name: 'Publish binary'
           uses: easingthemes/ssh-deploy@main
           with:
@@ -69,4 +64,5 @@
             #   whoami
             SCRIPT_AFTER: |
               whoami
-              systemctl restart candles-api
+              sudo chmod a+x /usr/local/bin/candles-api
+              sudo systemctl restart candles-api
