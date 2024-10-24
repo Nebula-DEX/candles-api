@@ -173,6 +173,9 @@ func (s *Store) AggregateCandles() {
 						openingTimestamp := ts + 60000
 						closingTimestamp := ts + (interval.Seconds * 1000)
 						candles = s.GetCandles(config.MarketId, 60, openingTimestamp, closingTimestamp)
+						sort.Slice(candles, func(i, j int) bool {
+							return candles[i].ClosingTimestamp < candles[j].ClosingTimestamp
+						})
 						openPrice := 0.0
 						highPrice := 0.0
 						lowPrice := 9999999999.0
