@@ -163,6 +163,9 @@ func (s *Store) AggregateCandles() {
 				firstTs := candles[len(candles)-1].ClosingTimestamp
 				lastTs := candles[0].ClosingTimestamp
 				for _, interval := range s.intervals {
+					if interval.Seconds == 60 {
+						continue
+					}
 					fromTimestamps := s.GetStartingTimestampsForInterval(interval.Seconds, firstTs, lastTs)
 					intervalCandles := make([]*data.Candle, 0)
 					for _, ts := range fromTimestamps {
