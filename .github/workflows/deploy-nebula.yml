@@ -55,7 +55,7 @@
           with:
             SSH_PRIVATE_KEY: ${{ secrets.CANDLES_APIDEPLOYEMENT_SSH_KEY }}
             ARGS: "--archive --compress --verbose --checksum --delete -i --rsync-path='sudo rsync'"
-            SOURCE: 'dist/candles-api'
+            SOURCE: './candles-api'
             REMOTE_HOST: '${{ matrix.target }}'
             REMOTE_USER: 'candles-api-deployment'
             TARGET: '/usr/local/bin/candles-api'
