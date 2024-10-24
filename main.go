@@ -24,6 +24,10 @@ var intervals = []*store.Interval{
 		Retention: time.Hour * 24 * 7,
 	},
 	{
+		Seconds:   1800,
+		Retention: time.Hour * 24 * 14,
+	},
+	{
 		Seconds:   3600,
 		Retention: time.Hour * 24 * 14,
 	},
