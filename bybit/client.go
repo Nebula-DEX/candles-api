@@ -48,12 +48,12 @@ func (c *Client) GetLatestCandles(symbol string) []*data.Candle {
 	}
 	for _, item := range res.Result.List {
 		closingTimestamp, _ := strconv.ParseInt(item[0], 10, 0)
-		openPrice, _ := strconv.ParseFloat(item[1], 0)
-		highPrice, _ := strconv.ParseFloat(item[2], 0)
-		lowPrice, _ := strconv.ParseFloat(item[3], 0)
-		closePrice, _ := strconv.ParseFloat(item[4], 0)
-		volume, _ := strconv.ParseFloat(item[5], 0)
-		turnover, _ := strconv.ParseFloat(item[6], 0)
+		openPrice, _ := strconv.ParseFloat(item[1], 64)
+		highPrice, _ := strconv.ParseFloat(item[2], 64)
+		lowPrice, _ := strconv.ParseFloat(item[3], 64)
+		closePrice, _ := strconv.ParseFloat(item[4], 64)
+		volume, _ := strconv.ParseFloat(item[5], 64)
+		turnover, _ := strconv.ParseFloat(item[6], 64)
 		candles = append(candles, data.NewCandle(
 			symbol,
 			"",

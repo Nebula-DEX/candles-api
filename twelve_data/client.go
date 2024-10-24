@@ -54,12 +54,12 @@ func (c *Client) GetLatestCandles(symbol string, micCode string) []*data.Candle 
 	}
 	for _, item := range res.Values {
 		dateTime, _ := time.Parse(time.DateTime, item.DateTime)
-		hourDiff := dateTime.Sub(time.Now()).Hours()
+		hourDiff := time.Until(dateTime).Hours()
 		closingTimestamp := dateTime.Add(time.Duration(hourDiff*-1) * time.Hour).UnixMilli()
-		openPrice, _ := strconv.ParseFloat(item.Open, 0)
-		highPrice, _ := strconv.ParseFloat(item.High, 0)
-		lowPrice, _ := strconv.ParseFloat(item.Low, 0)
-		closePrice, _ := strconv.ParseFloat(item.Close, 0)
+		openPrice, _ := strconv.ParseFloat(item.Open, 64)
+		highPrice, _ := strconv.ParseFloat(item.High, 64)
+		lowPrice, _ := strconv.ParseFloat(item.Low, 64)
+		closePrice, _ := strconv.ParseFloat(item.Close, 64)
 		volume := 0.0
 		turnover := 0.0
 		candles = append(candles, data.NewCandle(

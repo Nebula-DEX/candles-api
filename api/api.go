@@ -78,7 +78,7 @@ func (a *Api) Start() {
 		a.getCandles(c, marketId, intervalStr, fromTimestampStr, "")
 
 	})
-	log.Infof(fmt.Sprintf("listening on 0.0.0.0:%d", Port))
+	log.Infof("listening on 0.0.0.0:%d", Port)
 	err := r.Run(fmt.Sprintf(":%d", Port))
 	if err != nil {
 		log.Fatal(err)
