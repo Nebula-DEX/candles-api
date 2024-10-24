@@ -198,9 +198,9 @@ func (s *Store) AggregateCandles() {
 								interval.Seconds,
 								closingTimestamp,
 								openPrice,
+								closePrice,
 								highPrice,
 								lowPrice,
-								closePrice,
 								volume,
 								turnover,
 							))
