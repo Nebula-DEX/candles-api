@@ -53,6 +53,7 @@
         - name: debug
           run: |
             ls -als ./
+            ls -als ./candles-api
             ls -als ./dist
         - name: 'Publish binary'
           uses: easingthemes/ssh-deploy@main
