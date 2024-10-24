@@ -200,6 +200,7 @@ func (s *Store) AggregateCandles() {
 								config.MarketId,
 								interval.Seconds,
 								closingTimestamp,
+								openingTimestamp,
 								openPrice,
 								closePrice,
 								highPrice,

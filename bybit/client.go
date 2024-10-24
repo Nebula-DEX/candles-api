@@ -59,6 +59,7 @@ func (c *Client) GetLatestCandles(symbol string) []*data.Candle {
 			"",
 			60,
 			uint64(closingTimestamp),
+			uint64(closingTimestamp-60000),
 			openPrice,
 			closePrice,
 			highPrice,

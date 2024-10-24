@@ -8,6 +8,7 @@ type Candle struct {
 	MarketId         string  `json:"marketId,omitempty"`
 	Interval         uint64  `json:"interval,omitempty"`
 	ClosingTimestamp uint64  `json:"closingTimestamp,omitempty"`
+	OpeningTimestamp uint64  `json:"openingTimestamp,omitempty"`
 	Open             float64 `json:"open,omitempty"`
 	Close            float64 `json:"close,omitempty"`
 	High             float64 `json:"high,omitempty"`
@@ -21,6 +22,7 @@ func NewCandle(
 	marketId string,
 	interval uint64,
 	closingTimestamp uint64,
+	openingTimestamp uint64,
 	open float64,
 	close float64,
 	high float64,
@@ -34,6 +36,7 @@ func NewCandle(
 		MarketId:         marketId,
 		Interval:         interval,
 		ClosingTimestamp: closingTimestamp,
+		OpeningTimestamp: openingTimestamp,
 		Open:             open,
 		Close:            close,
 		High:             high,
