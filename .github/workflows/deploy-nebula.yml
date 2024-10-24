@@ -1,0 +1,71 @@
+---
+  name: Deploy binaries
+  
+  "on":
+    push:
+      tags:
+        - "v*"
+  
+  jobs:
+    build_dist:
+      name: "Build binary"
+      runs-on: ubuntu-latest
+      permissions:
+        contents: write
+      env:
+        GOOS: linux
+        GOARCH: amd64
+        CGO_ENABLED: 0
+  
+      steps:
+        - name: Set up Go
+          uses: actions/setup-go@v4
+          with:
+            go-version: '1.23'
+  
+        - name: Check out code
+          uses: actions/checkout@v2
+          with:
+            ref: ${{ inputs.tag }}
+  
+        - name: Build binary
+          run: go build -o dist/candles-api ./main.go
+
+        - name: Upload build artifacts
+          uses: actions/upload-artifact@v4
+          with:
+            name: candles_api_dist
+            path: ./dist
+
+    publish_dist:
+      name: 'Publish candles-api'
+      needs: build_dist
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          target: ${{ fromJSON( vars.JSON_CANDLES_API_SERVERS) }}
+      steps:
+        - name: Download built dist
+          uses: actions/download-artifact@v4
+          with:
+            name: candles_api_dist
+            path: ./
+        - name: debug
+          run: |
+            ls -als ./
+            ls -als ./dist
+        - name: 'Publish binary'
+          uses: easingthemes/ssh-deploy@main
+          with:
+            SSH_PRIVATE_KEY: ${{ secrets.CANDLES_APIDEPLOYEMENT_SSH_KEY }}
+            ARGS: "--archive --compress --verbose --checksum --delete -i --rsync-path='sudo rsync'"
+            SOURCE: 'dist/candles-api'
+            REMOTE_HOST: '${{ matrix.target }}'
+            REMOTE_USER: 'candles-api-deployment'
+            TARGET: '/usr/local/bin/candles-api'
+            # EXCLUDE: "/dist/, /node_modules/"
+            # SCRIPT_BEFORE: |
+            #   whoami
+            SCRIPT_AFTER: |
+              whoami
+              systemctl restart candles-api
