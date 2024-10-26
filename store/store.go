@@ -227,7 +227,7 @@ func (s *Store) AggregateCandles() {
 
 func (s *Store) SyncCandles() {
 	go func() {
-		for range time.NewTicker(time.Second * 15).C {
+		for range time.NewTicker(time.Second).C {
 			oldestTimestamp := time.Now().Add(-s.intervals[0].Retention).UnixMilli()
 			for _, config := range s.config {
 				go func() {
@@ -236,7 +236,22 @@ func (s *Store) SyncCandles() {
 						candles = s.bybitClient.GetLatestCandles(config.Symbol)
 					} else if config.PriceSource == Polygon {
 						candles = s.polygonClient.GetLatestCandles(config.Symbol)
-					} else if config.PriceSource == TwelveData {
+					}
+					for _, candle := range candles {
+						candle.MarketId = config.MarketId
+						if int64(candle.ClosingTimestamp) >= oldestTimestamp {
+							s.SaveCandle(candle)
+						}
+					}
+				}()
+			}
+		}
+		for range time.NewTicker(time.Second * 15).C {
+			oldestTimestamp := time.Now().Add(-s.intervals[0].Retention).UnixMilli()
+			for _, config := range s.config {
+				go func() {
+					candles := make([]*data.Candle, 0)
+					if config.PriceSource == TwelveData {
 						candles = s.twelveDataClient.GetLatestCandles(config.Symbol, config.MicCode)
 					}
 					for _, candle := range candles {
