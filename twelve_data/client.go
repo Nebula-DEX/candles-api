@@ -22,7 +22,7 @@ func NewClient(host string, apiKey string) *Client {
 func (c *Client) GetLatestCandles(symbol string, micCode string) []*data.Candle {
 	client := resty.New()
 	url := fmt.Sprintf(
-		"https://%s/time_series?symbol=%s&interval=1min&apikey=%s&mic_code=%s",
+		"https://%s/time_series?symbol=%s&interval=1min&apikey=%s&mic_code=%s&outputsize=5000",
 		c.host, symbol, c.apiKey, micCode,
 	)
 	resp, err := client.R().Get(url)
