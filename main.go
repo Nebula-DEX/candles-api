@@ -13,31 +13,31 @@ import (
 var intervals = []*store.Interval{
 	{
 		Seconds:   60,
-		Retention: time.Hour * 24,
-	},
-	{
-		Seconds:   300,
-		Retention: time.Hour * 24 * 3,
-	},
-	{
-		Seconds:   900,
 		Retention: time.Hour * 24 * 7,
 	},
 	{
+		Seconds:   300,
+		Retention: time.Hour * 24 * 14,
+	},
+	{
+		Seconds:   900,
+		Retention: time.Hour * 24 * 30,
+	},
+	{
 		Seconds:   1800,
-		Retention: time.Hour * 24 * 14,
-	},
-	{
-		Seconds:   3600,
-		Retention: time.Hour * 24 * 14,
-	},
-	{
-		Seconds:   14400,
 		Retention: time.Hour * 24 * 60,
 	},
 	{
-		Seconds:   86400,
+		Seconds:   3600,
+		Retention: time.Hour * 24 * 90,
+	},
+	{
+		Seconds:   14400,
 		Retention: time.Hour * 24 * 365,
+	},
+	{
+		Seconds:   86400,
+		Retention: time.Hour * 24 * 730,
 	},
 }
 

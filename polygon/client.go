@@ -20,10 +20,11 @@ func NewClient(host string, apiKey string) *Client {
 
 func (c *Client) GetLatestCandles(symbol string) []*data.Candle {
 	client := resty.New()
-	now := time.Now().Format(time.DateOnly)
+	to := time.Now().Format(time.DateOnly)
+	from := time.Now().Add(time.Hour * -24 * 7).Format(time.DateOnly)
 	url := fmt.Sprintf(
 		"https://%s/v2/aggs/ticker/C:%s/range/1/minute/%s/%s?adjusted=true&sort=asc&apiKey=%s",
-		c.host, symbol, now, now, c.apiKey,
+		c.host, symbol, from, to, c.apiKey,
 	)
 	resp, err := client.R().Get(url)
 	candles := make([]*data.Candle, 0)
