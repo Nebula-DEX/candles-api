@@ -246,6 +246,8 @@ func (s *Store) SyncCandles() {
 				}()
 			}
 		}
+	}()
+	go func() {
 		for range time.NewTicker(time.Second * 15).C {
 			oldestTimestamp := time.Now().Add(-s.intervals[0].Retention).UnixMilli()
 			for _, config := range s.config {
