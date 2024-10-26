@@ -53,9 +53,15 @@ func (c *Client) GetLatestCandles(symbol string, micCode string) []*data.Candle 
 		return candles
 	}
 	for _, item := range res.Values {
-		dateTime, _ := time.Parse(time.DateTime, item.DateTime)
-		hourDiff := time.Until(dateTime).Hours()
-		closingTimestamp := dateTime.Add(time.Duration(hourDiff*-1) * time.Hour).UnixMilli()
+		//dateTime := strings.ReplaceAll(item.DateTime, " ", "T")
+		//if micCode == "COMMODITY" {
+		//dateTime := strings.ReplaceAll(item.DateTime, " ", "T") + " AEST"
+		//}
+		aest, err := time.LoadLocation("Australia/Sydney")
+		closingTimestamp, err := time.ParseInLocation(time.DateTime, item.DateTime, aest)
+		if err != nil {
+			log.Errorf("cannot get closing timestamp from twelve data %v", err)
+		}
 		openPrice, _ := strconv.ParseFloat(item.Open, 64)
 		highPrice, _ := strconv.ParseFloat(item.High, 64)
 		lowPrice, _ := strconv.ParseFloat(item.Low, 64)
@@ -66,8 +72,8 @@ func (c *Client) GetLatestCandles(symbol string, micCode string) []*data.Candle 
 			symbol,
 			"",
 			60,
-			uint64(closingTimestamp),
-			uint64(closingTimestamp-60000),
+			uint64(closingTimestamp.UnixMilli()),
+			uint64(closingTimestamp.UnixMilli()-60000),
 			openPrice,
 			closePrice,
 			highPrice,
