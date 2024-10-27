@@ -10,6 +10,14 @@ import (
 	"time"
 )
 
+var timeZones = map[string]string{
+	"COMMODITY": "Australia/Sydney",
+	"XLON":      "Europe/London",
+	"XPAR":      "Europe/Paris",
+	"XETR":      "Europe/Berlin",
+	"XJPX":      "Asia/Tokyo",
+}
+
 type Client struct {
 	host   string
 	apiKey string
@@ -54,8 +62,8 @@ func (c *Client) GetLatestCandles(symbol string, micCode string) []*data.Candle 
 	}
 	for _, item := range res.Values {
 		tz, _ := time.LoadLocation("UTC")
-		if micCode == "COMMODITY" {
-			tz, _ = time.LoadLocation("Australia/Sydney")
+		if len(timeZones[micCode]) > 0 {
+			tz, _ = time.LoadLocation(timeZones[micCode])
 		}
 		closingTimestamp, err := time.ParseInLocation(time.DateTime, item.DateTime, tz)
 		if err != nil {

@@ -122,21 +122,25 @@ var config = []*store.Config{
 		MarketId:    "03d186c550ae6f13c1b0732320f1923c60767e37df5fa4099565a3db49691894",
 		PriceSource: store.TwelveData,
 		Symbol:      "FTSE",
+		MicCode:     "XLON",
 	},
 	{
 		MarketId:    "a98b3eeea8bdc5afd0677869df89d9630a277a02f7336bbc4c074ce5f743b581",
 		PriceSource: store.TwelveData,
 		Symbol:      "GDAXI",
+		MicCode:     "XETR",
 	},
 	{
 		MarketId:    "ee75df55c84dd341ce285fd65b7dc8f0857db977f6fb2875bce1beb405735a48",
 		PriceSource: store.TwelveData,
 		Symbol:      "N225",
+		MicCode:     "XJPX",
 	},
 	{
 		MarketId:    "2b851d11814da7e409ce6b0da8a62f0cf0e2fa4fb4a6344289aebbad1a79cb8d",
 		PriceSource: store.TwelveData,
 		Symbol:      "FCHI",
+		MicCode:     "XPAR",
 	},
 }
 

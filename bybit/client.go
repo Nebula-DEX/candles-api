@@ -19,7 +19,7 @@ func NewClient(host string) *Client {
 
 func (c *Client) GetLatestCandles(symbol string) []*data.Candle {
 	client := resty.New()
-	url := fmt.Sprintf("https://%s/v5/market/kline?symbol=%s&interval=1&category=linear", c.host, symbol)
+	url := fmt.Sprintf("https://%s/v5/market/kline?symbol=%s&interval=1&category=linear&limit=1000", c.host, symbol)
 	resp, err := client.R().Get(url)
 	candles := make([]*data.Candle, 0)
 	if err != nil {
