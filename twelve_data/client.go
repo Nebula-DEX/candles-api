@@ -53,12 +53,11 @@ func (c *Client) GetLatestCandles(symbol string, micCode string) []*data.Candle 
 		return candles
 	}
 	for _, item := range res.Values {
-		//dateTime := strings.ReplaceAll(item.DateTime, " ", "T")
-		//if micCode == "COMMODITY" {
-		//dateTime := strings.ReplaceAll(item.DateTime, " ", "T") + " AEST"
-		//}
-		aest, err := time.LoadLocation("Australia/Sydney")
-		closingTimestamp, err := time.ParseInLocation(time.DateTime, item.DateTime, aest)
+		tz, _ := time.LoadLocation("UTC")
+		if micCode == "COMMODITY" {
+			tz, _ = time.LoadLocation("Australia/Sydney")
+		}
+		closingTimestamp, err := time.ParseInLocation(time.DateTime, item.DateTime, tz)
 		if err != nil {
 			log.Errorf("cannot get closing timestamp from twelve data %v", err)
 		}
