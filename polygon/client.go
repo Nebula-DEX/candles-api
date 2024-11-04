@@ -23,7 +23,7 @@ func (c *Client) GetLatestCandles(symbol string) []*data.Candle {
 	to := time.Now().Format(time.DateOnly)
 	from := time.Now().Add(time.Hour * -24 * 7).Format(time.DateOnly)
 	url := fmt.Sprintf(
-		"https://%s/v2/aggs/ticker/C:%s/range/1/minute/%s/%s?adjusted=true&sort=asc&apiKey=%s",
+		"https://%s/v2/aggs/ticker/C:%s/range/1/minute/%s/%s?adjusted=true&sort=asc&apiKey=%s&limit=50000",
 		c.host, symbol, from, to, c.apiKey,
 	)
 	resp, err := client.R().Get(url)
